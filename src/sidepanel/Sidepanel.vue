@@ -283,7 +283,7 @@ onUnmounted(() => {
         </k-tabbar-link>
         <k-tabbar-link
           :active="activeTab === 'reader'"
-          :label="showReaderButton ? 'Reader' : 'Reader'"
+          label="Reader"
           :badge="showReaderButton ? '!' : undefined"
           @click="activeTab = 'reader'"
         >
@@ -293,7 +293,7 @@ onUnmounted(() => {
         </k-tabbar-link>
         <k-tabbar-link
           :active="activeTab === 'media'"
-          :label="showMediaButton ? 'Media' : 'Media'"
+          label="Media"
           :badge="showMediaButton ? String(contextStore.mediaItems.length) : undefined"
           @click="activeTab = 'media'"
         >

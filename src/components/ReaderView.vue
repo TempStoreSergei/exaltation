@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { Readability } from '@mozilla/readability'
+import DOMPurify from 'dompurify'
 import {
   kBlock,
   kBlockTitle,
@@ -15,6 +16,17 @@ const isLoading = ref(false)
 const error = ref<string | null>(null)
 
 const hasReaderContent = computed(() => !!contextStore.readerContent)
+
+// Sanitized reader content to prevent XSS
+const sanitizedReaderContent = computed(() => {
+  if (!contextStore.readerContent)
+    return ''
+  return DOMPurify.sanitize(contextStore.readerContent, {
+    ALLOWED_TAGS: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'strong', 'em', 'b', 'i', 'blockquote', 'pre', 'code', 'img', 'figure', 'figcaption', 'br', 'hr', 'div', 'span'],
+    ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class'],
+    ALLOW_DATA_ATTR: false,
+  })
+})
 
 async function activateReaderMode() {
   if (!contextStore.documentHTML) {
@@ -117,7 +129,7 @@ onMounted(() => {
             <!-- eslint-disable-next-line vue/no-v-html -->
             <div
               class="prose prose-sm max-w-none dark:prose-invert text-gray-700 dark:text-gray-200 leading-relaxed"
-              v-html="contextStore.readerContent"
+              v-html="sanitizedReaderContent"
             />
           </div>
         </k-card>
