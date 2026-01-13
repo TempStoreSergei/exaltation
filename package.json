@@ -30,6 +30,13 @@
     "postinstall": "simple-git-hooks",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "@tailwindcss/vite": "^4.1.17",
+    "konsta": "^5.0.6",
+    "pinia": "^3.0.4",
+    "tailwindcss": "^4.1.17"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^2.27.0",
     "@ffflorian/jszip-cli": "^3.8.5",
@@ -74,10 +81,5 @@
   },
   "lint-staged": {
     "*": "eslint --fix"
-  },
-  "dependencies": {
-    "@tailwindcss/vite": "^4.1.17",
-    "konsta": "^5.0.6",
-    "tailwindcss": "^4.1.17"
   }
 }
