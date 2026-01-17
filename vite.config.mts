@@ -7,9 +7,9 @@ import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
+import tailwindcss from '@tailwindcss/vite'
 import { isDev, port, r } from './scripts/utils'
 import packageJson from './package.json'
-import tailwindcss from '@tailwindcss/vite'
 
 export const sharedConfig: UserConfig = {
   root: r('src'),
@@ -63,19 +63,24 @@ export const sharedConfig: UserConfig = {
         server.middlewares.use('/__log', (req, res, next) => {
           if (req.method === 'POST') {
             let body = ''
-            req.on('data', chunk => { body += chunk.toString() })
+            req.on('data', (chunk) => {
+              body += chunk.toString()
+            })
             req.on('end', () => {
               const logFile = resolve(__dirname, 'logs/debug.log')
               const timestamp = new Date().toISOString()
               const logEntry = `[${timestamp}] ${body}\n`
+              // eslint-disable-next-line no-console
               console.log(`[Client Log] ${body}`)
               fs.appendFile(logFile, logEntry, (err) => {
-                if (err) console.error('Failed to write log:', err)
+                if (err)
+                  console.error('Failed to write log:', err)
               })
               res.statusCode = 200
               res.end('ok')
             })
-          } else {
+          }
+          else {
             next()
           }
         })
@@ -106,8 +111,8 @@ export default defineConfig(({ command }) => ({
   },
   build: {
     watch: isDev
-        ? {}
-        : undefined,
+      ? {}
+      : undefined,
     outDir: r('extension/dist'),
     emptyOutDir: false,
     sourcemap: isDev ? 'inline' : false,

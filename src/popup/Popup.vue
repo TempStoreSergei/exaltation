@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue'
-import { kProvider, kPage, kNavbar, kBlock, kBlockTitle, kList, kListItem, kRange } from 'konsta/vue'
+import { computed, onMounted, ref } from 'vue'
+import { kBlock, kBlockTitle, kList, kListItem, kNavbar, kPage, kProvider, kRange } from 'konsta/vue'
 import { storageScrollSpeed, storageScrollSpeedReady } from '~/logic/storage'
 
 function openOptionsPage() {
@@ -23,7 +23,7 @@ const safeSpeed = computed({
     if (isReady.value) {
       storageScrollSpeed.value = val
     }
-  }
+  },
 })
 </script>
 
@@ -52,7 +52,7 @@ const safeSpeed = computed({
         </k-block>
 
         <k-list strong inset>
-           <k-list-item
+          <k-list-item
             title="Open Options"
             link
             @click="openOptionsPage"
